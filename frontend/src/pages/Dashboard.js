@@ -34,7 +34,7 @@ function Dashboard() {
     fetchBookings();
     const storedUserName = localStorage.getItem("userName");
     if (storedUserName) setUserName(storedUserName);
-  }, [navigate]);
+  }, [navigate, fetchRooms, fetchBookings]);
 
   const fetchRooms = async () => {
     try {
@@ -110,7 +110,7 @@ function Dashboard() {
 
     try {
       setLoading(true);
-      const res = await API.post("/bookings", {
+      await API.post("/bookings", {
         roomId: selectedRoom._id,
         guestName: bookingForm.guestName,
         guestEmail: bookingForm.guestEmail,
@@ -523,9 +523,9 @@ function Dashboard() {
                   <div className="empty-state-title">No bookings yet</div>
                   <div className="empty-state-text">
                     You haven't made any bookings yet.{" "}
-                    <a href="#" onClick={() => setView("browse")}>
+                    <button onClick={() => setView("browse")} className="link-button">
                       Browse rooms now
-                    </a>
+                    </button>
                   </div>
                 </div>
               )}
