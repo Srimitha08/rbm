@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../services/api";
 import "../styles/dashboard.css";
@@ -26,17 +26,7 @@ function Dashboard() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!localStorage.getItem("token")) {
-      navigate("/");
-    }
-    fetchRooms();
-    fetchBookings();
-    const storedUserName = localStorage.getItem("userName");
-    if (storedUserName) setUserName(storedUserName);
-  }, [navigate, fetchRooms, fetchBookings]);
-
-  const fetchRooms = async () => {
+  const fetchRooms = useCallback(async () => {
     try {
       setLoading(true);
       const params = roomType ? `?type=${roomType}` : "";
@@ -47,16 +37,26 @@ function Dashboard() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [roomType]);
 
-  const fetchBookings = async () => {
+  const fetchBookings = useCallback(async () => {
     try {
       const res = await API.get("/bookings/my-bookings");
       setBookings(res.data);
     } catch (error) {
       console.error("Error fetching bookings:", error);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/");
+    }
+    fetchRooms();
+    fetchBookings();
+    const storedUserName = localStorage.getItem("userName");
+    if (storedUserName) setUserName(storedUserName);
+  }, [navigate, fetchRooms, fetchBookings]);
 
   const handleSelectRoom = (room) => {
     setSelectedRoom(room);
