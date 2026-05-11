@@ -1,6 +1,10 @@
 /* eslint-disable no-unused-vars */
 
-import React, { useEffect, useState } from "react";
+import React, {
+  useEffect,
+  useState,
+  useCallback
+} from "react";
 
 import {
   useParams,
@@ -23,15 +27,7 @@ function BookingPage() {
     guests: 1
   });
 
-  useEffect(() => {
-
-    fetchRoom();
-
-    // eslint-disable-next-line
-
-  }, []);
-
-  const fetchRoom = async () => {
+  const fetchRoom = useCallback(async () => {
 
     try {
 
@@ -49,7 +45,13 @@ function BookingPage() {
 
     }
 
-  };
+  }, [id]);
+
+  useEffect(() => {
+
+    fetchRoom();
+
+  }, [fetchRoom]);
 
   const calculateDays = () => {
 
