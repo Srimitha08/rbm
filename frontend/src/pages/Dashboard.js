@@ -10,7 +10,6 @@ function Dashboard() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(false);
   const [view, setView] = useState("browse");
-  const [selectedRoom, setSelectedRoom] = useState(null);
   const [roomType, setRoomType] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [priceRange, setPriceRange] = useState("all");
@@ -77,6 +76,36 @@ function Dashboard() {
     localStorage.removeItem("userRole");
 
     navigate("/");
+  };
+
+  const handleBookRoom = async (room) => {
+    try {
+
+      const bookingData = {
+        roomId: room._id,
+        guestName: userName,
+        guestEmail: "guest@gmail.com",
+        guestPhone: "9876543210",
+        checkInDate: new Date(),
+        checkOutDate: new Date(
+          new Date().getTime() + 24 * 60 * 60 * 1000
+        ),
+        numberOfGuests: 1,
+        specialRequests: "None"
+      };
+
+      await API.post("/api/bookings", bookingData);
+
+      alert(`Room ${room.roomNumber} booked successfully!`);
+
+      fetchBookings();
+
+    } catch (error) {
+      alert(
+        error.response?.data?.message ||
+        "Booking failed"
+      );
+    }
   };
 
   const filteredRooms = rooms.filter((room) => {
@@ -302,6 +331,9 @@ function Dashboard() {
 
                         <button
                           className="book-btn"
+                          onClick={() =>
+                            handleBookRoom(room)
+                          }
                         >
                           Book Now
                         </button>
