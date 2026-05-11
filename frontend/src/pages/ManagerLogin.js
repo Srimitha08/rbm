@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import API from "../services/api";
-import { useNavigate, Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/auth.css";
 
-function Login() {
+function ManagerLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -18,7 +17,7 @@ function Login() {
 
     try {
       if (!email || !password) {
-        setError("Please fill in all fields");
+        setError("Please enter email and password");
         setLoading(false);
         return;
       }
@@ -28,11 +27,17 @@ function Login() {
         password
       });
 
+      if (res.data.role !== "ADMIN") {
+        setError(`Login failed: Your account role is '${res.data.role}', not ADMIN. Use admin@hotel.com / admin123.`);
+        setLoading(false);
+        return;
+      }
+
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("userName", res.data.name || email.split("@")[0]);
-      localStorage.setItem("userRole", res.data.role || "USER");
-      navigate("/customer-dashboard");
-
+      localStorage.setItem("userRole", res.data.role);
+      alert("Manager login successful!");
+      navigate("/admin-dashboard");
     } catch (error) {
       setError(error.response?.data?.message || "Login failed. Please try again.");
     } finally {
@@ -44,11 +49,11 @@ function Login() {
     <div className="auth-container">
       <div className="auth-box auth-box-small">
         <div className="auth-avatar">
-          <span>👤</span>
+          <span>👨‍💼</span>
         </div>
-        <h1>Customer Login</h1>
+        <h1>Manager Login</h1>
         <p className="login-as-text">
-          Guest Login
+          Admin Access Only
         </p>
 
         {error && <div className="error-message">{error}</div>}
@@ -78,16 +83,13 @@ function Login() {
           </div>
 
           <button type="submit" className="auth-button" disabled={loading}>
-            {loading ? "Logging in..." : "Sign In"}
+            {loading ? "Signing in..." : "Sign In"}
           </button>
         </form>
 
         <div className="auth-footer">
           <p>
-            Don't have an account? <Link to="/register" className="auth-link">Register now</Link>
-          </p>
-          <p style={{ marginTop: "15px", fontSize: "13px" }}>
-            Are you a manager? <Link to="/manager-login" className="auth-link">Login here</Link>
+            Are you a guest? <Link to="/login" className="auth-link">Customer login</Link>
           </p>
         </div>
       </div>
@@ -95,4 +97,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default ManagerLogin;

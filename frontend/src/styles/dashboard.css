@@ -569,37 +569,44 @@ body {
   background-color: #f8f9ff;
 }
 
-.status-confirmed {
-  color: #26a69a;
+.status-badge {
   font-weight: 700;
-  background-color: #e8f5f0;
   padding: 6px 12px;
   border-radius: 6px;
   display: inline-block;
   font-size: 12px;
   text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-confirmed {
+  color: #26a69a;
+  background-color: #e8f5f0;
 }
 
 .status-pending {
   color: #ff9800;
-  font-weight: 700;
   background-color: #fff3e0;
-  padding: 6px 12px;
-  border-radius: 6px;
-  display: inline-block;
-  font-size: 12px;
-  text-transform: uppercase;
 }
 
 .status-cancelled {
   color: #f44336;
-  font-weight: 700;
   background-color: #ffebee;
-  padding: 6px 12px;
-  border-radius: 6px;
-  display: inline-block;
-  font-size: 12px;
-  text-transform: uppercase;
+}
+
+.status-badge.status-confirmed {
+  color: #26a69a;
+  background-color: #e8f5f0;
+}
+
+.status-badge.status-pending {
+  color: #ff9800;
+  background-color: #fff3e0;
+}
+
+.status-badge.status-cancelled {
+  color: #f44336;
+  background-color: #ffebee;
 }
 
 .cancel-booking-btn {
@@ -756,6 +763,101 @@ body {
   .bookings-table {
     overflow-x: auto;
   }
+}
+
+/* Admin Dashboard Styles */
+.admin-grid {
+  width: 100%;
+  padding: 30px;
+}
+
+.admin-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.admin-panel {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.admin-panel h2 {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 25px;
+  font-weight: 700;
+  border-bottom: 2px solid #667eea;
+  padding-bottom: 15px;
+}
+
+.admin-table-wrap {
+  overflow-x: auto;
+  border-radius: 8px;
+  background: white;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.admin-table thead {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.admin-table th {
+  padding: 16px 12px;
+  text-align: left;
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: none;
+}
+
+.admin-table td {
+  padding: 14px 12px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+  color: #555;
+}
+
+.admin-table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.admin-table tbody tr:hover {
+  background-color: #f8f9ff;
+}
+
+.admin-action-btn {
+  padding: 8px 14px;
+  background-color: #667eea;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.admin-action-btn:hover {
+  background-color: #764ba2;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.admin-action-btn:active {
+  transform: translateY(0);
 }
 
 /* Link button styling */

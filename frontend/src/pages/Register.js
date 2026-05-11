@@ -40,11 +40,12 @@ function Register() {
       await API.post("/auth/register", {
         name,
         email,
-        password
+        password,
+        role: "USER"
       });
 
-      alert("Account created successfully! Please login.");
-      navigate("/");
+      alert("Customer account created successfully! Please login.");
+      navigate("/customer-login");
 
     } catch (error) {
       setError(error.response?.data?.message || "Registration failed. Please try again.");
@@ -118,7 +119,7 @@ function Register() {
         <div className="auth-footer">
           <p>
             Already have an account?{" "}
-            <Link to="/" className="auth-link">Login here</Link>
+            <Link to="/customer-login" className="auth-link">Login here</Link>
           </p>
         </div>
       </div>

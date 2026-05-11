@@ -50,6 +50,10 @@ exports.createBooking = async (req, res) => {
     const nights = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
     const totalPrice = nights * room.price;
 
+    if (!room.available) {
+      return res.status(400).json({ message: "Room is currently unavailable" });
+    }
+
     // Create booking
     const booking = new Booking({
       room: roomId,
@@ -67,6 +71,9 @@ exports.createBooking = async (req, res) => {
 
     await booking.save();
     await booking.populate("room");
+
+    room.available = false;
+    await room.save();
 
     res.status(201).json({
       message: "Booking successful",
@@ -135,6 +142,20 @@ exports.cancelBooking = async (req, res) => {
     booking.status = "Cancelled";
     await booking.save();
 
+    const room = await Room.findById(booking.room);
+    if (room) {
+      const activeBookings = await Booking.find({
+        room: room._id,
+        status: { $ne: "Cancelled" },
+        _id: { $ne: booking._id }
+      });
+
+      if (activeBookings.length === 0) {
+        room.available = true;
+        await room.save();
+      }
+    }
+
     res.json({
       message: "Booking cancelled successfully",
       booking
@@ -163,14 +184,17 @@ exports.getBookingsByRoom = async (req, res) => {
 // GET ALL BOOKINGS (ADMIN ONLY)
 exports.getAllBookings = async (req, res) => {
   try {
+    console.log("Admin bookings request - Admin role:", req.user.role);
     const bookings = await Booking.find()
       .populate("room")
       .populate("user", "name email phone")
       .sort({ createdAt: -1 });
 
+    console.log(`Found ${bookings.length} total bookings`);
     res.json(bookings);
 
   } catch (error) {
+    console.error("Error fetching bookings:", error.message);
     res.status(500).json({ message: error.message });
   }
 };

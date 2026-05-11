@@ -49,9 +49,19 @@ function Dashboard() {
   }, []);
 
   useEffect(() => {
-    if (!localStorage.getItem("token")) {
+    const token = localStorage.getItem("token");
+    const role = localStorage.getItem("userRole");
+
+    if (!token) {
       navigate("/");
+      return;
     }
+
+    if (role !== "USER") {
+      navigate("/manager-login");
+      return;
+    }
+
     fetchRooms();
     fetchBookings();
     const storedUserName = localStorage.getItem("userName");
