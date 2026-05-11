@@ -23,18 +23,29 @@ function Login() {
         return;
       }
 
-      const res = await API.post("/auth/login", {
+      const res = await API.post("/api/auth/login", {
         email,
         password
       });
 
       localStorage.setItem("token", res.data.token);
-      localStorage.setItem("userName", res.data.name || email.split("@")[0]);
-      localStorage.setItem("userRole", res.data.role || "USER");
+      localStorage.setItem(
+        "userName",
+        res.data.name || email.split("@")[0]
+      );
+
+      localStorage.setItem(
+        "userRole",
+        res.data.role || "USER"
+      );
+
       navigate("/customer-dashboard");
 
     } catch (error) {
-      setError(error.response?.data?.message || "Login failed. Please try again.");
+      setError(
+        error.response?.data?.message ||
+        "Login failed. Please try again."
+      );
     } finally {
       setLoading(false);
     }
@@ -43,19 +54,28 @@ function Login() {
   return (
     <div className="auth-container">
       <div className="auth-box auth-box-small">
+
         <div className="auth-avatar">
           <span>👤</span>
         </div>
+
         <h1>Customer Login</h1>
+
         <p className="login-as-text">
           Guest Login
         </p>
 
-        {error && <div className="error-message">{error}</div>}
+        {error && (
+          <div className="error-message">
+            {error}
+          </div>
+        )}
 
         <form onSubmit={handleLogin} className="auth-form">
+
           <div className="form-input-row">
             <span className="input-icon">📧</span>
+
             <input
               id="email"
               type="email"
@@ -65,8 +85,10 @@ function Login() {
               disabled={loading}
             />
           </div>
+
           <div className="form-input-row">
             <span className="input-icon">🔒</span>
+
             <input
               id="password"
               type="password"
@@ -77,19 +99,34 @@ function Login() {
             />
           </div>
 
-          <button type="submit" className="auth-button" disabled={loading}>
+          <button
+            type="submit"
+            className="auth-button"
+            disabled={loading}
+          >
             {loading ? "Logging in..." : "Sign In"}
           </button>
+
         </form>
 
         <div className="auth-footer">
+
           <p>
-            Don't have an account? <Link to="/register" className="auth-link">Register now</Link>
+            Don't have an account?{" "}
+            <Link to="/register" className="auth-link">
+              Register now
+            </Link>
           </p>
+
           <p style={{ marginTop: "15px", fontSize: "13px" }}>
-            Are you a manager? <Link to="/manager-login" className="auth-link">Login here</Link>
+            Are you a manager?{" "}
+            <Link to="/manager-login" className="auth-link">
+              Login here
+            </Link>
           </p>
+
         </div>
+
       </div>
     </div>
   );
