@@ -105,7 +105,7 @@ PORT=5000
 npm start
 ```
 
-The backend will run on `http://localhost:5000`
+The backend will run on `import.meta.env.VITE_API_URL`
 
 ### Frontend Setup
 

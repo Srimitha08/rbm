@@ -24,7 +24,7 @@ Use this checklist to verify your setup is complete and working.
 - [ ] Run `npm start` or `npm run dev`
 - [ ] Check console for "🚀 Server running on port 5000"
 - [ ] Verify MongoDB connection "MongoDB Connected"
-- [ ] Test: Open http://localhost:5000 in browser
+- [ ] Test: Open import.meta.env.VITE_API_URL in browser
 - [ ] Should see: `{"message": "Room Booking API Running"}`
 
 ---
@@ -39,7 +39,7 @@ Use this checklist to verify your setup is complete and working.
 - [ ] Navigate to `/frontend` directory
 - [ ] Run `npm install`
 - [ ] Verify API base URL in `src/services/api.js`
-  - Should be: `http://localhost:5000/api`
+  - Should be: `import.meta.env.VITE_API_URL/api`
 
 ### Start Frontend
 - [ ] Run `npm start`
@@ -55,13 +55,13 @@ Use this checklist to verify your setup is complete and working.
 
 **Test 1: Backend Running**
 ```bash
-curl http://localhost:5000
+curl import.meta.env.VITE_API_URL
 ```
 ✅ Should return: `{"message": "Room Booking API Running"}`
 
 **Test 2: User Registration**
 ```bash
-curl -X POST http://localhost:5000/api/auth/register \
+curl -X POST import.meta.env.VITE_API_URL/api/auth/register \
   -H "Content-Type: application/json" \
   -d '{"name":"Test User","email":"test@example.com","password":"password123"}'
 ```
@@ -69,7 +69,7 @@ curl -X POST http://localhost:5000/api/auth/register \
 
 **Test 3: User Login**
 ```bash
-curl -X POST http://localhost:5000/api/auth/login \
+curl -X POST import.meta.env.VITE_API_URL/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{"email":"test@example.com","password":"password123"}'
 ```
@@ -77,7 +77,7 @@ curl -X POST http://localhost:5000/api/auth/login \
 
 **Test 4: Get Rooms**
 ```bash
-curl http://localhost:5000/api/rooms
+curl import.meta.env.VITE_API_URL/api/rooms
 ```
 ✅ Should return empty array [] (initially) or rooms if added
 
@@ -249,7 +249,7 @@ Check these files exist:
 
 Once all items above are checked:
 
-1. [ ] Backend running on http://localhost:5000 ✅
+1. [ ] Backend running on import.meta.env.VITE_API_URL ✅
 2. [ ] Frontend running on http://localhost:3000 ✅
 3. [ ] Can register new user ✅
 4. [ ] Can login with registered user ✅
@@ -276,7 +276,7 @@ If all items above are checked, your hotel booking system is fully operational!
 
 | Component | URL | Port | Command |
 |-----------|-----|------|---------|
-| Backend | http://localhost:5000 | 5000 | `npm start` |
+| Backend | import.meta.env.VITE_API_URL | 5000 | `npm start` |
 | Frontend | http://localhost:3000 | 3000 | `npm start` |
 | MongoDB | mongodb://localhost:27017 | 27017 | `mongosh` |
 

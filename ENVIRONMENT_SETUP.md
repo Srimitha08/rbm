@@ -33,7 +33,7 @@ The frontend API endpoint is configured in `frontend/src/services/api.js`:
 ```javascript
 // Current configuration (development)
 const API = axios.create({
-  baseURL: "http://localhost:5000/api"
+  baseURL: "import.meta.env.VITE_API_URL/api"
 });
 ```
 

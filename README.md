@@ -126,7 +126,7 @@ if (existingBooking) {
 ## 5️⃣ API Endpoints
 
 ### Authentication Endpoints
-**Base URL:** `http://localhost:5000/api/auth`
+**Base URL:** `import.meta.env.VITE_API_URL/api/auth`
 
 #### Register User
 ```
@@ -172,7 +172,7 @@ Response: 200 OK
 ---
 
 ### Room Management Endpoints
-**Base URL:** `http://localhost:5000/api/rooms`
+**Base URL:** `import.meta.env.VITE_API_URL/api/rooms`
 
 #### Get All Rooms
 ```
@@ -270,7 +270,7 @@ Response: 200 OK
 ---
 
 ### Booking Endpoints
-**Base URL:** `http://localhost:5000/api/bookings`
+**Base URL:** `import.meta.env.VITE_API_URL/api/bookings`
 
 #### Create Booking (User)
 ```
@@ -524,7 +524,7 @@ Response: 200 OK
    ```bash
    npm start
    ```
-   Server runs on `http://localhost:5000`
+   Server runs on `import.meta.env.VITE_API_URL`
 
 ### Frontend Setup
 

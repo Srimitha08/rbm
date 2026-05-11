@@ -36,7 +36,7 @@ Role: ADMIN
 
 **Endpoint:**
 ```
-POST http://localhost:5000/api/auth/register
+POST import.meta.env.VITE_API_URL/api/auth/register
 Content-Type: application/json
 ```
 
@@ -91,7 +91,7 @@ Content-Type: application/json
 
 **Endpoint:**
 ```
-POST http://localhost:5000/api/auth/login
+POST import.meta.env.VITE_API_URL/api/auth/login
 Content-Type: application/json
 ```
 
@@ -141,7 +141,7 @@ Wrong password:
 
 **Endpoint:**
 ```
-GET http://localhost:5000/api/rooms
+GET import.meta.env.VITE_API_URL/api/rooms
 ```
 
 **Expected Response:** 200 OK
@@ -174,7 +174,7 @@ GET http://localhost:5000/api/rooms
 
 **Endpoint:**
 ```
-GET http://localhost:5000/api/rooms?type=Single
+GET import.meta.env.VITE_API_URL/api/rooms?type=Single
 ```
 
 **Expected Response:** 200 OK
@@ -204,7 +204,7 @@ GET http://localhost:5000/api/rooms?type=Single
 
 **Endpoint:**
 ```
-GET http://localhost:5000/api/rooms/{{room_id}}
+GET import.meta.env.VITE_API_URL/api/rooms/{{room_id}}
 ```
 
 **Expected Response:** 200 OK
@@ -225,7 +225,7 @@ GET http://localhost:5000/api/rooms/{{room_id}}
 
 **Endpoint:**
 ```
-POST http://localhost:5000/api/rooms
+POST import.meta.env.VITE_API_URL/api/rooms
 Authorization: Bearer {{admin_token}}
 Content-Type: application/json
 ```
@@ -279,7 +279,7 @@ Content-Type: application/json
 
 **Endpoint:**
 ```
-PUT http://localhost:5000/api/rooms/{{room_id}}
+PUT import.meta.env.VITE_API_URL/api/rooms/{{room_id}}
 Authorization: Bearer {{admin_token}}
 Content-Type: application/json
 ```
@@ -312,7 +312,7 @@ Content-Type: application/json
 
 **Endpoint:**
 ```
-DELETE http://localhost:5000/api/rooms/{{room_id}}
+DELETE import.meta.env.VITE_API_URL/api/rooms/{{room_id}}
 Authorization: Bearer {{admin_token}}
 ```
 
@@ -333,7 +333,7 @@ Authorization: Bearer {{admin_token}}
 
 **Endpoint:**
 ```
-POST http://localhost:5000/api/bookings
+POST import.meta.env.VITE_API_URL/api/bookings
 Authorization: Bearer {{user_token}}
 Content-Type: application/json
 ```
@@ -610,13 +610,13 @@ Content-Type: application/json
 
 **Step 1: Get a booking to cancel**
 ```
-GET http://localhost:5000/api/bookings/my-bookings
+GET import.meta.env.VITE_API_URL/api/bookings/my-bookings
 Authorization: Bearer {{user_token}}
 ```
 
 **Step 2: Cancel the booking**
 ```
-PUT http://localhost:5000/api/bookings/{{booking_id}}/cancel
+PUT import.meta.env.VITE_API_URL/api/bookings/{{booking_id}}/cancel
 Authorization: Bearer {{user_token}}
 ```
 
@@ -718,7 +718,7 @@ Authorization: Bearer {{user_token}}
 
 **Endpoint:**
 ```
-GET http://localhost:5000/api/bookings/my-bookings
+GET import.meta.env.VITE_API_URL/api/bookings/my-bookings
 Authorization: Bearer {{user_token}}
 ```
 
@@ -747,7 +747,7 @@ Authorization: Bearer {{user_token}}
 
 **Endpoint:**
 ```
-GET http://localhost:5000/api/bookings/admin/all
+GET import.meta.env.VITE_API_URL/api/bookings/admin/all
 Authorization: Bearer {{admin_token}}
 ```
 
@@ -780,7 +780,7 @@ Authorization: Bearer {{admin_token}}
 
 **Endpoint:**
 ```
-GET http://localhost:5000/api/bookings/{{booking_id}}/details
+GET import.meta.env.VITE_API_URL/api/bookings/{{booking_id}}/details
 Authorization: Bearer {{user_token}}
 ```
 
@@ -810,7 +810,7 @@ Authorization: Bearer {{user_token}}
 
 **Endpoint:**
 ```
-POST http://localhost:5000/api/rooms
+POST import.meta.env.VITE_API_URL/api/rooms
 Authorization: Bearer {{user_token}}
 ```
 
@@ -827,7 +827,7 @@ Authorization: Bearer {{user_token}}
 
 **Endpoint:**
 ```
-GET http://localhost:5000/api/bookings/admin/all
+GET import.meta.env.VITE_API_URL/api/bookings/admin/all
 Authorization: Bearer {{user_token}}
 ```
 
@@ -844,7 +844,7 @@ Authorization: Bearer {{user_token}}
 
 **Endpoint:**
 ```
-PUT/DELETE http://localhost:5000/api/rooms/{{room_id}}
+PUT/DELETE import.meta.env.VITE_API_URL/api/rooms/{{room_id}}
 Authorization: Bearer {{user_token}}
 ```
 

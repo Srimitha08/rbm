@@ -14,8 +14,8 @@ Status:            LISTENING ✓
 Process:           Started
 MongoDB:           Connected ✓
 API Endpoints:     Ready ✓
-Access URL:        http://localhost:5000
-Test Health Check: http://localhost:5000 → Returns "Room Booking API Running"
+Access URL:        import.meta.env.VITE_API_URL
+Test Health Check: import.meta.env.VITE_API_URL → Returns "Room Booking API Running"
 ```
 
 ### Frontend Server
@@ -327,7 +327,7 @@ For Testing Overlap Prevention:
 ```
 1. Download Postman from https://www.postman.com/downloads/
 2. Create new collection "Hotel Booking"
-3. Add Base URL: http://localhost:5000/api
+3. Add Base URL: import.meta.env.VITE_API_URL/api
 ```
 
 ### Test Authentication

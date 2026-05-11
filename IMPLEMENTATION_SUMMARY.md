@@ -212,7 +212,7 @@ cd backend
 npm install  # (if not already done)
 npm start
 ```
-Backend will run on: **http://localhost:5000**
+Backend will run on: **import.meta.env.VITE_API_URL**
 
 ### Terminal 2: Start Frontend
 ```bash

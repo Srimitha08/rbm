@@ -44,7 +44,7 @@ Start the backend:
 npm start
 ```
 
-**Backend running on:** http://localhost:5000
+**Backend running on:** import.meta.env.VITE_API_URL
 
 ### Step 2: Frontend Setup
 
@@ -104,7 +104,7 @@ npm start
 
 **Create a Room (Admin):**
 ```
-POST http://localhost:5000/api/rooms
+POST import.meta.env.VITE_API_URL/api/rooms
 Headers: Authorization: Bearer <admin-token>
 Body:
 {

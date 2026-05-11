@@ -222,7 +222,7 @@ FS/
 
 ### ✅ Servers Running
 ```
-Backend:  http://localhost:5000
+Backend:  import.meta.env.VITE_API_URL
           Port 5000 - LISTENING ✓
           MongoDB Connected ✓
           

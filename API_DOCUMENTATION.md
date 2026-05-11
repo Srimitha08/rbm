@@ -4,7 +4,7 @@ Complete API reference for the Hotel Room Booking System backend.
 
 ## Base URL
 ```
-http://localhost:5000/api
+import.meta.env.VITE_API_URL/api
 ```
 
 ## Authentication
@@ -367,24 +367,24 @@ Authorization: Bearer <admin-token>
 
 1. Login
 ```bash
-curl -X POST http://localhost:5000/api/auth/login \
+curl -X POST import.meta.env.VITE_API_URL/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{"email":"john@example.com","password":"password123"}'
 ```
 
 2. Get available rooms
 ```bash
-curl http://localhost:5000/api/rooms?type=Deluxe
+curl import.meta.env.VITE_API_URL/api/rooms?type=Deluxe
 ```
 
 3. Check room availability
 ```bash
-curl http://localhost:5000/api/bookings/availability/roomId123
+curl import.meta.env.VITE_API_URL/api/bookings/availability/roomId123
 ```
 
 4. Create booking
 ```bash
-curl -X POST http://localhost:5000/api/bookings \
+curl -X POST import.meta.env.VITE_API_URL/api/bookings \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer <token>" \
   -d '{
@@ -400,7 +400,7 @@ curl -X POST http://localhost:5000/api/bookings \
 
 5. View bookings
 ```bash
-curl http://localhost:5000/api/bookings/my-bookings \
+curl import.meta.env.VITE_API_URL/api/bookings/my-bookings \
   -H "Authorization: Bearer <token>"
 ```
 
