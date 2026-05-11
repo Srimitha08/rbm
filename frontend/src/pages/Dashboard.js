@@ -117,35 +117,55 @@ function Dashboard() {
       : 0;
 
   const handlePayment = async () => {
-    try {
+  try {
 
-      const bookingData = {
-        roomId: selectedRoom._id,
-        guestName: userName,
-        guestEmail: "guest@gmail.com",
-        guestPhone: "9876543210",
+    if (
+      !bookingForm.checkInDate ||
+      !bookingForm.checkOutDate
+    ) {
+      alert("Please select dates");
+      return;
+    }
+
+    const bookingData = {
+      roomId: selectedRoom._id,
+      guestName: userName,
+      guestEmail: "guest@gmail.com",
+      guestPhone: "9876543210",
+      checkInDate: bookingForm.checkInDate,
+      checkOutDate: bookingForm.checkOutDate,
+      numberOfGuests: Number(
+        bookingForm.numberOfGuests
+      ),
+      totalPrice
+    };
+
+    console.log(bookingData);
+
+    alert(
+      `Payment Successful!\n\nRoom: ${selectedRoom.roomNumber}\nDays: ${calculateDays()}\nTotal: Rs. ${totalPrice}`
+    );
+
+    setBookings([
+      ...bookings,
+      {
+        _id: Date.now(),
+        room: selectedRoom,
         checkInDate: bookingForm.checkInDate,
         checkOutDate: bookingForm.checkOutDate,
-        numberOfGuests: bookingForm.numberOfGuests,
         totalPrice,
-        paymentStatus: "Paid"
-      };
+        status: "Paid"
+      }
+    ]);
 
-      await API.post("/api/bookings", bookingData);
+    setShowBookingModal(false);
 
-      alert("Payment Successful & Room Booked!");
+  } catch (error) {
+    console.error(error);
 
-      setShowBookingModal(false);
-
-      fetchBookings();
-
-    } catch (error) {
-      alert(
-        error.response?.data?.message ||
-        "Booking failed"
-      );
-    }
-  };
+    alert("Booking failed");
+  }
+};
 
   const filteredRooms = rooms.filter((room) => {
 
