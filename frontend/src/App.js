@@ -1,4 +1,5 @@
 import React from "react";
+
 import {
   BrowserRouter as Router,
   Routes,
@@ -9,10 +10,13 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import BookingPage from "./pages/BookingPage";
+import ManagerLogin from "./pages/ManagerLogin";
 import ManagerDashboard from "./pages/ManagerDashboard";
 
 function App() {
+
   return (
+
     <Router>
 
       <Routes>
@@ -35,17 +39,26 @@ function App() {
         <Route
           path="/book-room/:id"
           element={<BookingPage />}
-
         />
+
         <Route
-  path="/manager-dashboard"
-  element={<ManagerDashboard />}
-/>
+          path="/manager-login"
+          element={<ManagerLogin />}
+        />
+
+        <Route
+          path="/manager-dashboard"
+          element={
+            <ManagerDashboard />
+          }
+        />
 
       </Routes>
 
     </Router>
+
   );
+
 }
 
 export default App;
