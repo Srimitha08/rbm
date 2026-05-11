@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import BookingPage from "./pages/BookingPage";
+import ManagerDashboard from "./pages/ManagerDashboard";
 
 function App() {
   return (
@@ -34,7 +35,12 @@ function App() {
         <Route
           path="/book-room/:id"
           element={<BookingPage />}
+
         />
+        <Route
+  path="/manager-dashboard"
+  element={<ManagerDashboard />}
+/>
 
       </Routes>
 

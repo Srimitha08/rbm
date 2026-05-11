@@ -297,11 +297,12 @@ function Dashboard() {
                         <div className="room-card-image">
 
                           <img
-                            src={room.image}
-                            alt={
-                              room.roomNumber
-                            }
-                          />
+  src={
+    room.image ||
+    "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600"
+  }
+  alt={room.roomNumber}
+/>
 
                           <div className="room-badge">
                             {room.type}

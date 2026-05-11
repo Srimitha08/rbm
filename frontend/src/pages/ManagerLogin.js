@@ -1,100 +1,140 @@
 import React, { useState } from "react";
-import API from "../services/api";
-import { Link, useNavigate } from "react-router-dom";
+
+import {
+  useNavigate
+} from "react-router-dom";
+
 import "../styles/auth.css";
 
 function ManagerLogin() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+
+  const [email, setEmail] =
+    useState("");
+
+  const [password, setPassword] =
+    useState("");
+
+  const [error, setError] =
+    useState("");
+
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleManagerLogin = (e) => {
+
     e.preventDefault();
+
     setError("");
-    setLoading(true);
 
-    try {
-      if (!email || !password) {
-        setError("Please enter email and password");
-        setLoading(false);
-        return;
-      }
+    if (
+      email === "admin@hotel.com" &&
+      password === "admin123"
+    ) {
 
-      const res = await API.post("/auth/login", {
-        email,
-        password
-      });
+      localStorage.setItem(
+        "manager",
+        "true"
+      );
 
-      if (res.data.role !== "ADMIN") {
-        setError(`Login failed: Your account role is '${res.data.role}', not ADMIN. Use admin@hotel.com / admin123.`);
-        setLoading(false);
-        return;
-      }
+      navigate(
+        "/manager-dashboard"
+      );
 
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("userName", res.data.name || email.split("@")[0]);
-      localStorage.setItem("userRole", res.data.role);
-      alert("Manager login successful!");
-      navigate("/admin-dashboard");
-    } catch (error) {
-      setError(error.response?.data?.message || "Login failed. Please try again.");
-    } finally {
-      setLoading(false);
+    } else {
+
+      setError(
+        "Invalid manager credentials"
+      );
+
     }
+
   };
 
   return (
+
     <div className="auth-container">
+
       <div className="auth-box auth-box-small">
+
         <div className="auth-avatar">
           <span>👨‍💼</span>
         </div>
-        <h1>Manager Login</h1>
+
+        <h1>
+          Manager Login
+        </h1>
+
         <p className="login-as-text">
-          Admin Access Only
+          Admin Access
         </p>
 
-        {error && <div className="error-message">{error}</div>}
+        {error && (
 
-        <form onSubmit={handleLogin} className="auth-form">
-          <div className="form-input-row">
-            <span className="input-icon">📧</span>
-            <input
-              id="email"
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              disabled={loading}
-            />
+          <div className="error-message">
+            {error}
           </div>
+
+        )}
+
+        <form
+          onSubmit={
+            handleManagerLogin
+          }
+          className="auth-form"
+        >
+
           <div className="form-input-row">
-            <span className="input-icon">🔒</span>
+
+            <span className="input-icon">
+              📧
+            </span>
+
             <input
-              id="password"
+              type="email"
+              placeholder="Manager Email"
+              value={email}
+              onChange={(e) =>
+                setEmail(
+                  e.target.value
+                )
+              }
+            />
+
+          </div>
+
+          <div className="form-input-row">
+
+            <span className="input-icon">
+              🔒
+            </span>
+
+            <input
               type="password"
               placeholder="Password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              disabled={loading}
+              onChange={(e) =>
+                setPassword(
+                  e.target.value
+                )
+              }
             />
+
           </div>
 
-          <button type="submit" className="auth-button" disabled={loading}>
-            {loading ? "Signing in..." : "Sign In"}
+          <button
+            type="submit"
+            className="auth-button"
+          >
+            Login
           </button>
+
         </form>
 
-        <div className="auth-footer">
-          <p>
-            Are you a guest? <Link to="/login" className="auth-link">Customer login</Link>
-          </p>
-        </div>
       </div>
+
     </div>
+
   );
+
 }
 
 export default ManagerLogin;
