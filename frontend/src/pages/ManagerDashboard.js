@@ -3,9 +3,15 @@ import React, {
   useState
 } from "react";
 
+import {
+  useNavigate
+} from "react-router-dom";
+
 import API from "../services/api";
 
 function ManagerDashboard() {
+
+  const navigate = useNavigate();
 
   const [rooms, setRooms] =
     useState([]);
@@ -104,6 +110,16 @@ function ManagerDashboard() {
 
   };
 
+  const handleLogout = () => {
+
+    localStorage.removeItem(
+      "manager"
+    );
+
+    navigate("/");
+
+  };
+
   return (
 
     <div
@@ -115,6 +131,21 @@ function ManagerDashboard() {
       <h1>
         Manager Dashboard
       </h1>
+
+      <button
+        onClick={handleLogout}
+        style={{
+          padding: "10px 20px",
+          marginBottom: "30px",
+          background: "#764ba2",
+          color: "white",
+          border: "none",
+          borderRadius: "8px",
+          cursor: "pointer"
+        }}
+      >
+        Logout
+      </button>
 
       <h2>
         Add Room
@@ -130,6 +161,10 @@ function ManagerDashboard() {
               e.target.value
           })
         }
+        style={{
+          margin: "10px",
+          padding: "10px"
+        }}
       />
 
       <input
@@ -142,6 +177,10 @@ function ManagerDashboard() {
               e.target.value
           })
         }
+        style={{
+          margin: "10px",
+          padding: "10px"
+        }}
       />
 
       <input
@@ -154,6 +193,10 @@ function ManagerDashboard() {
               e.target.value
           })
         }
+        style={{
+          margin: "10px",
+          padding: "10px"
+        }}
       />
 
       <input
@@ -166,6 +209,10 @@ function ManagerDashboard() {
               e.target.value
           })
         }
+        style={{
+          margin: "10px",
+          padding: "10px"
+        }}
       />
 
       <input
@@ -178,15 +225,32 @@ function ManagerDashboard() {
               e.target.value
           })
         }
+        style={{
+          margin: "10px",
+          padding: "10px",
+          width: "300px"
+        }}
       />
 
       <button
         onClick={handleAddRoom}
+        style={{
+          padding: "10px 20px",
+          background: "#20b2aa",
+          color: "white",
+          border: "none",
+          borderRadius: "8px",
+          cursor: "pointer"
+        }}
       >
         Add Room
       </button>
 
-      <hr />
+      <hr
+        style={{
+          margin: "40px 0"
+        }}
+      />
 
       <h2>
         All Rooms
@@ -200,7 +264,8 @@ function ManagerDashboard() {
             border:
               "1px solid #ccc",
             padding: "20px",
-            marginBottom: "20px"
+            marginBottom: "20px",
+            borderRadius: "10px"
           }}
         >
 
@@ -211,9 +276,10 @@ function ManagerDashboard() {
             }
             alt={room.roomNumber}
             style={{
-              width: "200px",
-              height: "120px",
-              objectFit: "cover"
+              width: "250px",
+              height: "150px",
+              objectFit: "cover",
+              borderRadius: "10px"
             }}
           />
 
@@ -224,11 +290,21 @@ function ManagerDashboard() {
           </h3>
 
           <p>
+            Type:
+            {" "}
             {room.type}
           </p>
 
           <p>
+            Price:
+            {" "}
             Rs. {room.price}
+          </p>
+
+          <p>
+            Capacity:
+            {" "}
+            {room.capacity}
           </p>
 
           <button
@@ -237,6 +313,14 @@ function ManagerDashboard() {
                 room._id
               )
             }
+            style={{
+              padding: "10px 20px",
+              background: "red",
+              color: "white",
+              border: "none",
+              borderRadius: "8px",
+              cursor: "pointer"
+            }}
           >
             Delete Room
           </button>
@@ -245,66 +329,81 @@ function ManagerDashboard() {
 
       ))}
 
-      <hr />
+      <hr
+        style={{
+          margin: "40px 0"
+        }}
+      />
 
       <h2>
         All Bookings
       </h2>
 
-      {bookings.map(
-        (booking) => (
+      {bookings.length > 0 ? (
 
-          <div
-            key={booking._id}
-            style={{
-              border:
-                "1px solid #ccc",
-              padding: "20px",
-              marginBottom: "20px"
-            }}
-          >
+        bookings.map(
+          (booking) => (
 
-            <h3>
-              Room {
-                booking.room
-                  ?.roomNumber
-              }
-            </h3>
+            <div
+              key={booking._id}
+              style={{
+                border:
+                  "1px solid #ccc",
+                padding: "20px",
+                marginBottom: "20px",
+                borderRadius: "10px"
+              }}
+            >
 
-            <p>
-              Check In:
-              {" "}
-              {
-                booking.checkInDate
-              }
-            </p>
+              <h3>
+                Room {
+                  booking.room
+                    ?.roomNumber
+                }
+              </h3>
 
-            <p>
-              Check Out:
-              {" "}
-              {
-                booking.checkOutDate
-              }
-            </p>
+              <p>
+                Check In:
+                {" "}
+                {
+                  booking.checkInDate
+                }
+              </p>
 
-            <p>
-              Amount:
-              {" "}
-              Rs.
-              {
-                booking.totalPrice
-              }
-            </p>
+              <p>
+                Check Out:
+                {" "}
+                {
+                  booking.checkOutDate
+                }
+              </p>
 
-            <p>
-              Status:
-              {" "}
-              Paid
-            </p>
+              <p>
+                Amount:
+                {" "}
+                Rs.
+                {
+                  booking.totalPrice
+                }
+              </p>
 
-          </div>
+              <p>
+                Status:
+                {" "}
+                Paid
+              </p>
 
+            </div>
+
+          )
         )
+
+      ) : (
+
+        <h3>
+          No bookings yet
+        </h3>
+
       )}
 
     </div>
