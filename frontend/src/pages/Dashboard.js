@@ -15,6 +15,16 @@ function Dashboard() {
   const [priceRange, setPriceRange] = useState("all");
   const [userName, setUserName] = useState("Guest");
 
+  const [selectedRoom, setSelectedRoom] = useState(null);
+
+  const [bookingForm, setBookingForm] = useState({
+    checkInDate: "",
+    checkOutDate: "",
+    numberOfGuests: 1
+  });
+
+  const [showBookingModal, setShowBookingModal] = useState(false);
+
   const navigate = useNavigate();
 
   const fetchRooms = useCallback(async () => {
@@ -78,25 +88,54 @@ function Dashboard() {
     navigate("/");
   };
 
-  const handleBookRoom = async (room) => {
+  const handleBookRoom = (room) => {
+    setSelectedRoom(room);
+    setShowBookingModal(true);
+  };
+
+  const calculateDays = () => {
+    if (
+      bookingForm.checkInDate &&
+      bookingForm.checkOutDate
+    ) {
+      const checkIn = new Date(bookingForm.checkInDate);
+      const checkOut = new Date(bookingForm.checkOutDate);
+
+      const diff =
+        (checkOut - checkIn) /
+        (1000 * 60 * 60 * 24);
+
+      return diff > 0 ? diff : 0;
+    }
+
+    return 0;
+  };
+
+  const totalPrice =
+    selectedRoom && calculateDays() > 0
+      ? selectedRoom.price * calculateDays()
+      : 0;
+
+  const handlePayment = async () => {
     try {
 
       const bookingData = {
-        roomId: room._id,
+        roomId: selectedRoom._id,
         guestName: userName,
         guestEmail: "guest@gmail.com",
         guestPhone: "9876543210",
-        checkInDate: new Date(),
-        checkOutDate: new Date(
-          new Date().getTime() + 24 * 60 * 60 * 1000
-        ),
-        numberOfGuests: 1,
-        specialRequests: "None"
+        checkInDate: bookingForm.checkInDate,
+        checkOutDate: bookingForm.checkOutDate,
+        numberOfGuests: bookingForm.numberOfGuests,
+        totalPrice,
+        paymentStatus: "Paid"
       };
 
       await API.post("/api/bookings", bookingData);
 
-      alert(`Room ${room.roomNumber} booked successfully!`);
+      alert("Payment Successful & Room Booked!");
+
+      setShowBookingModal(false);
 
       fetchBookings();
 
@@ -381,6 +420,9 @@ function Dashboard() {
                       <tr>
                         <th>Room</th>
                         <th>Type</th>
+                        <th>Check In</th>
+                        <th>Check Out</th>
+                        <th>Total Price</th>
                         <th>Status</th>
                       </tr>
                     </thead>
@@ -400,7 +442,23 @@ function Dashboard() {
                           </td>
 
                           <td>
-                            {booking.status}
+                            {new Date(
+                              booking.checkInDate
+                            ).toLocaleDateString()}
+                          </td>
+
+                          <td>
+                            {new Date(
+                              booking.checkOutDate
+                            ).toLocaleDateString()}
+                          </td>
+
+                          <td>
+                            Rs. {booking.totalPrice}
+                          </td>
+
+                          <td>
+                            Paid
                           </td>
 
                         </tr>
@@ -424,6 +482,94 @@ function Dashboard() {
                 </div>
 
               )}
+
+            </div>
+
+          )}
+
+          {showBookingModal && selectedRoom && (
+
+            <div className="booking-modal">
+
+              <div className="booking-modal-content">
+
+                <h2>
+                  Book Room {selectedRoom.roomNumber}
+                </h2>
+
+                <div className="form-group">
+
+                  <label>Check In Date</label>
+
+                  <input
+                    type="date"
+                    value={bookingForm.checkInDate}
+                    onChange={(e) =>
+                      setBookingForm({
+                        ...bookingForm,
+                        checkInDate: e.target.value
+                      })
+                    }
+                  />
+
+                </div>
+
+                <div className="form-group">
+
+                  <label>Check Out Date</label>
+
+                  <input
+                    type="date"
+                    value={bookingForm.checkOutDate}
+                    onChange={(e) =>
+                      setBookingForm({
+                        ...bookingForm,
+                        checkOutDate: e.target.value
+                      })
+                    }
+                  />
+
+                </div>
+
+                <div className="form-group">
+
+                  <label>Guests</label>
+
+                  <input
+                    type="number"
+                    min="1"
+                    value={bookingForm.numberOfGuests}
+                    onChange={(e) =>
+                      setBookingForm({
+                        ...bookingForm,
+                        numberOfGuests: e.target.value
+                      })
+                    }
+                  />
+
+                </div>
+
+                <h3>
+                  Total Price: Rs. {totalPrice}
+                </h3>
+
+                <button
+                  className="book-btn"
+                  onClick={handlePayment}
+                >
+                  Pay Now
+                </button>
+
+                <button
+                  className="cancel-btn"
+                  onClick={() =>
+                    setShowBookingModal(false)
+                  }
+                >
+                  Cancel
+                </button>
+
+              </div>
 
             </div>
 
