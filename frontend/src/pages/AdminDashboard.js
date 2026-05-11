@@ -14,7 +14,7 @@ function AdminDashboard() {
   const fetchRooms = useCallback(async () => {
     try {
       setLoadingRooms(true);
-      const res = await API.get("/rooms");
+      const res = await API.get("/api/rooms");
       setRooms(res.data);
     } catch (error) {
       console.error("Error fetching rooms:", error);

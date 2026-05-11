@@ -41,7 +41,7 @@ function Dashboard() {
 
   const fetchBookings = useCallback(async () => {
     try {
-      const res = await API.get("/bookings/my-bookings");
+      const res = await API.get("/api/bookings/my-bookings");
       setBookings(res.data);
     } catch (error) {
       console.error("Error fetching bookings:", error);
