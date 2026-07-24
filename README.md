@@ -586,14 +586,12 @@ Role: ADMIN
 3. Set environment variables
 4. Deploy
 
-**Live Backend Link:** _(To be added by user)_
-
 ### Frontend Deployment (Vercel/Netlify)
 1. Build frontend: `npm run build`
 2. Deploy to Vercel/Netlify
 3. Update API endpoint in `frontend/src/services/api.js`
 
-**Live Frontend Link:** _(To be added by user)_
+**Live Frontend Link:** https://my-project-xi-lime.vercel.app/
 
 ---
 
